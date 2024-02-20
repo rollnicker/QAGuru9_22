@@ -1,7 +1,6 @@
 import os
 
 from appium.options.android import UiAutomator2Options
-from appium.options.ios import XCUITestOptions
 from dotenv import load_dotenv
 from pydantic import BaseModel
 
@@ -24,42 +23,6 @@ class Config(BaseModel):
 
     def to_android_driver_options(self, context):
         options = UiAutomator2Options()
-
-        if context == 'local_emulator':
-            options.set_capability('remote_url', self.remote_url)
-            options.set_capability('udid', self.udid)
-            options.set_capability('appWaitActivity', self.appWaitActivity)
-            options.set_capability('app', self.app_local)
-
-        if context == 'local_real_device':
-            options.set_capability('remote_url', self.remote_url)
-            options.set_capability('udid', self.udid)
-            options.set_capability('appWaitActivity', self.appWaitActivity)
-            options.set_capability('app', self.app_local)
-
-        if context == 'bstack':
-            options.set_capability('remote_url', self.remote_url)
-            options.set_capability('deviceName', self.device_name)
-            options.set_capability('platformName', self.platformName)
-            options.set_capability('platformVersion', self.platformVersion)
-            options.set_capability('appWaitActivity', self.appWaitActivity)
-            options.set_capability('app', self.app_bstack)
-            options.set_capability(
-                'bstack:options', {
-                    'projectName': 'Wikipedia tests project',
-                    'buildName': 'Wikipedia-app-build',
-                    'sessionName': 'Wikipedia tests',
-                    'userName': self.userName,
-                    'accessKey': self.accessKey,
-                },
-            )
-
-        print(self.device_name)
-
-        return options
-
-    def to_ios_driver_options(self, context):
-        options = XCUITestOptions()
 
         if context == 'local_emulator':
             options.set_capability('remote_url', self.remote_url)
