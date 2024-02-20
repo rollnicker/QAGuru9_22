@@ -1,9 +1,11 @@
 import os
-from appium.options.ios import XCUITestOptions
+
 from appium.options.android import UiAutomator2Options
+from appium.options.ios import XCUITestOptions
 from dotenv import load_dotenv
-from QAGuru9_22 import utils
 from pydantic import BaseModel
+
+from QAGuru9_22 import utils
 
 
 class Config(BaseModel):
@@ -91,5 +93,6 @@ class Config(BaseModel):
         print(self.device_name)
 
         return options
+
 
 config = Config(context="local_emulator")

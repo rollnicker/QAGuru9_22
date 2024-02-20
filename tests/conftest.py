@@ -1,12 +1,13 @@
 import os
+
 import allure
 import allure_commons
 import pytest
-
-from selene import browser, support
 from appium import webdriver
-from QAGuru9_22 import utils
 from dotenv import load_dotenv
+from selene import browser, support
+
+from QAGuru9_22 import utils
 
 
 def pytest_addoption(parser):
@@ -36,37 +37,6 @@ def context(request):
 def android_mobile_management(context):
     from config import config
     options = config.to_android_driver_options(context=context)
-
-    with allure.step('setup app session'):
-        browser.config.driver = webdriver.Remote(
-            options.get_capability('remote_url'),
-            options=options
-        )
-
-    browser.config.timeout = 10.0
-
-    browser.config._wait_decorator = support._logging.wait_with(
-        context=allure_commons._allure.StepContext)
-
-    yield
-
-    utils.allure_attach.screenshot()
-
-    utils.allure_attach.page_source_xml()
-
-    session_id = browser.driver.session_id
-
-    with allure.step('tear down app session with id' + session_id):
-        browser.quit()
-
-    if context == 'bstack':
-        utils.allure_attach.bstack_video(session_id)
-
-
-@pytest.fixture(scope='function')
-def ios_mobile_management(context):
-    from config import config
-    options = config.to_ios_driver_options(context=context)
 
     with allure.step('setup app session'):
         browser.config.driver = webdriver.Remote(

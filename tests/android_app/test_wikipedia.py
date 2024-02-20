@@ -1,8 +1,6 @@
-import pytest
 from allure_commons._allure import step
 from appium.webdriver.common.appiumby import AppiumBy
 from selene import browser, have
-
 
 
 def test_check_welcome_screens(android_mobile_management):
